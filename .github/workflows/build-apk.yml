@@ -3,17 +3,52 @@ name: Gerar APK Android
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "master" ]
+    branches:
+      - main
+      - master
 
 jobs:
   build:
+    name: Construir APK
     runs-on: ubuntu-latest
+
     steps:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
+      - name: Mostrar estrutura do repositório
+        shell: bash
+        run: |
+          echo "=== Arquivos da raiz ==="
+          ls -la
+          echo ""
+          echo "=== Procurando projeto Android ==="
+          find . -maxdepth 5 \( -name "settings.gradle" -o -name "settings.gradle.kts" \) -print
+
+      - name: Localizar projeto Android
+        id: localizar
+        shell: bash
+        run: |
+          SETTINGS_FILE="$(find . -maxdepth 5 -type f \( -name "settings.gradle" -o -name "settings.gradle.kts" \) | head -n 1)"
+
+          if [ -z "$SETTINGS_FILE" ]; then
+            echo "::error::Não encontrei settings.gradle ou settings.gradle.kts no repositório."
+            echo "::error::Envie também as pastas app/ e os arquivos build.gradle/settings.gradle para o GitHub."
+            exit 1
+          fi
+
+          PROJECT_DIR="$(dirname "$SETTINGS_FILE")"
+
+          echo "Projeto Android encontrado em: $PROJECT_DIR"
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+
+          if [ ! -f "$PROJECT_DIR/app/build.gradle" ] && [ ! -f "$PROJECT_DIR/app/build.gradle.kts" ]; then
+            echo "::error::Encontrei settings.gradle, mas não encontrei app/build.gradle dentro de $PROJECT_DIR."
+            exit 1
+          fi
+
       - name: Configurar Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -21,7 +56,8 @@ jobs:
       - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Instalar SDK 35
+      - name: Instalar Android SDK 35
+        shell: bash
         run: |
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools"
@@ -31,11 +67,33 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Compilar APK
-        run: gradle assembleDebug --stacktrace
+      - name: Verificar versões
+        shell: bash
+        run: |
+          java -version
+          gradle --version
+          echo "Projeto: $PROJECT_DIR"
 
-      - name: Preparar nome do APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk Ilha-dos-Lacos.apk
+      - name: Compilar APK
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle -p "$PROJECT_DIR" :app:assembleDebug --stacktrace --info 2>&1 | tee build.log
+
+      - name: Localizar APK gerado
+        id: apk
+        shell: bash
+        run: |
+          APK="$(find "$PROJECT_DIR/app/build/outputs/apk" -type f -name "*.apk" | head -n 1)"
+
+          if [ -z "$APK" ]; then
+            echo "::error::A compilação terminou, mas nenhum APK foi encontrado."
+            find "$PROJECT_DIR" -maxdepth 7 -type f | sort | tail -n 200
+            exit 1
+          fi
+
+          echo "APK encontrado: $APK"
+          cp "$APK" "$GITHUB_WORKSPACE/Ilha-dos-Lacos.apk"
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
@@ -43,3 +101,12 @@ jobs:
           name: Ilha-dos-Lacos-APK
           path: Ilha-dos-Lacos.apk
           if-no-files-found: error
+          retention-days: 30
+
+      - name: Enviar log em caso de erro
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-compilacao
+          path: build.log
+          if-no-files-found: ignore
