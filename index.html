@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e80a0">
+<title>Ilha do Desejo</title>
+<style> :root{ --sand:#ffe4b9; --mint:#c0ecb8; --aqua:#4abbbd; --ocean:#1e80a0; --blue:#0064e5; --deep:#0d2e92; --accent:#4abbbd; --accent2:#1e80a0; --accent3:#0064e5; --accent4:#c0ecb8; --accent5:#ffe4b9; --soft:#fff9f0; --bg:#eef9f6; --bg2:#e5f5f1; --panel:#fffdf8; --panel2:#e7f5ef; --text:#10324a; --muted:#557181; --line:rgba(13,46,146,.14); --danger:#0d2e92; --ok:#1e80a0; --warn:#0064e5; --shadow:0 16px 42px rgba(13,46,146,.12); --page: radial-gradient(circle at 10% 4%, rgba(255,228,185,.95), transparent 28rem), radial-gradient(circle at 92% 14%, rgba(192,236,184,.72), transparent 26rem), radial-gradient(circle at 48% 100%, rgba(74,187,189,.15), transparent 34rem), linear-gradient(180deg,#fff9ef 0%,#eef9f6 48%,#dff4f2 100%); } html[data-theme="light"]{ --bg:#eef9f6; --bg2:#e5f5f1; --panel:#fffdf8; --panel2:#e7f5ef; --text:#10324a; --muted:#557181; --line:rgba(13,46,146,.14); --shadow:0 16px 42px rgba(13,46,146,.12); --page: radial-gradient(circle at 10% 4%, rgba(255,228,185,.95), transparent 28rem), radial-gradient(circle at 92% 14%, rgba(192,236,184,.72), transparent 26rem), radial-gradient(circle at 48% 100%, rgba(74,187,189,.15), transparent 34rem), linear-gradient(180deg,#fff9ef 0%,#eef9f6 48%,#dff4f2 100%); } html[data-theme="dark"]{ --bg:#071b2e; --bg2:#0b2740; --panel:#0c2940; --panel2:#123a50; --text:#f7fbf4; --muted:#b8d4d4; --line:rgba(192,236,184,.14); --danger:#ffe4b9; --ok:#4abbbd; --warn:#c0ecb8; --shadow:0 18px 52px rgba(0,0,0,.30); --page: radial-gradient(circle at 9% 5%, rgba(74,187,189,.17), transparent 28rem), radial-gradient(circle at 92% 12%, rgba(30,128,160,.15), transparent 27rem), linear-gradient(180deg,#071b2e,#0a2238); } *{box-sizing:border-box} html{scroll-behavior:smooth} body{ margin:0;min-height:100vh;color:var(--text);background:var(--page); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif } button,input,select,textarea{font:inherit} button{cursor:pointer} .hidden{display:none!important} .shell{width:min(1180px,calc(100% - 28px));margin:auto;padding:22px 0 90px} .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px} .brand{display:flex;align-items:center;gap:11px;font-weight:950;letter-spacing:.01em} .brand-mark{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;color:#172025;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));box-shadow:0 12px 28px color-mix(in srgb,var(--accent) 24%,transparent)} .top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap} .card{background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)} .section{padding:20px} .muted{color:var(--muted)} .hero-kicker{color:var(--accent2);font-size:.76rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase} h1,h2,h3,p{margin-top:0} h1{font-size:clamp(2.15rem,7vw,4.2rem);line-height:.96;margin-bottom:14px} h2{font-size:1.45rem;margin-bottom:10px} h3{font-size:1rem} .badge,.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px} .badge{padding:7px 10px;font-size:.8rem} .tag{padding:5px 8px;font-size:.72rem} .btn,.tab-btn{ border:1px solid var(--line);background:var(--panel2);color:var(--text); border-radius:14px;padding:11px 14px;font-weight:800;transition:.18s ease } .btn:hover,.tab-btn:hover{transform:translateY(-1px)} .btn.primary,.tab-btn.active{background:linear-gradient(135deg,var(--accent),var(--accent3));border-color:transparent;color:#172025} .btn.secondary{background:linear-gradient(135deg,var(--accent2),var(--accent5));border-color:transparent;color:#2b2130} .btn.ghost{background:transparent} .btn.danger{background:color-mix(in srgb,var(--danger) 14%,var(--panel));border-color:color-mix(in srgb,var(--danger) 35%,transparent);color:var(--danger)} .btn.small{padding:8px 10px;font-size:.82rem;border-radius:11px} .btn.icon{width:42px;height:42px;padding:0;display:grid;place-items:center;position:relative} .dot-badge{position:absolute;right:-3px;top:-3px;min-width:18px;height:18px;border-radius:99px;padding:0 5px;background:var(--danger);color:white;font-size:.68rem;display:grid;place-items:center} .login-wrap{min-height:calc(100vh - 100px);display:grid;place-items:center} .login-card{width:min(530px,100%);padding:26px} .role-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0} .login-switch{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 15px} .login-switch .btn.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#172025;border-color:transparent} .form-grid{display:grid;gap:13px} label{font-size:.82rem;font-weight:800;color:var(--text)} input,select,textarea{ width:100%;margin-top:6px;padding:12px 13px;background:var(--bg2);color:var(--text); border:1px solid var(--line);border-radius:13px;outline:none } textarea{min-height:95px;resize:vertical} input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent)} .error{min-height:19px;color:var(--danger);font-size:.82rem;margin-top:8px} .notice{padding:12px 13px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);color:var(--muted);font-size:.82rem} .technical{margin-top:12px;border-top:1px solid var(--line);padding-top:10px} .technical summary{cursor:pointer;color:var(--muted);font-size:.76rem;list-style:none} .technical summary::-webkit-details-marker{display:none} .grid{display:grid;gap:16px} .cols-2{grid-template-columns:repeat(2,minmax(0,1fr))} .cols-3{grid-template-columns:repeat(3,minmax(0,1fr))} .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px} .stat{padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:17px} .stat strong{display:block;font-size:1.65rem;margin-top:4px} .app-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px} .page-window{animation:fadein .18s ease} @keyframes fadein{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}} .profile-head{display:flex;gap:16px;align-items:center} .avatar{width:64px;height:64px;flex:0 0 64px;border-radius:20px;background:linear-gradient(135deg,var(--panel2),var(--bg2));border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-size:1.55rem;font-weight:900} .avatar.sm{width:48px;height:48px;flex-basis:48px;border-radius:16px;font-size:1.15rem} .avatar.lg{width:92px;height:92px;flex-basis:92px;border-radius:26px;font-size:2rem} .avatar img{width:100%;height:100%;object-fit:cover} .split{display:flex;justify-content:space-between;gap:14px;align-items:flex-start} .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap} .stack{display:grid;gap:10px} .player-card,.event-card,.result-player-card,.connection-card{padding:15px;border:1px solid var(--line);border-radius:18px;background:var(--panel);transition:.18s ease} .result-player-card{cursor:pointer} .result-player-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line))} .player-top{display:flex;align-items:center;gap:12px;margin-bottom:14px} .slider-line{display:flex;align-items:center;gap:12px} input[type="range"]{padding:0;border:0;background:transparent;accent-color:var(--accent)} .score-pill{min-width:57px;text-align:center;padding:8px;border-radius:11px;background:var(--bg2);border:1px solid var(--line);font-weight:950} .level-box{margin-top:9px;padding:9px 11px;border-radius:12px;background:color-mix(in srgb,var(--accent5) 8%,var(--panel));border:1px solid color-mix(in srgb,var(--accent5) 20%,transparent);font-size:.83rem;font-weight:800} .event-card{position:relative;overflow:hidden} .event-card.new::before{content:"NOVO";position:absolute;right:12px;top:12px;font-size:.64rem;letter-spacing:.08em;font-weight:950;background:var(--accent2);color:#271c27;padding:5px 7px;border-radius:999px} .event-time{font-size:.76rem;color:var(--accent2);font-weight:900} .deadline{font-size:.82rem;font-weight:850;color:var(--warn)} .countdown{font-size:1.15rem;font-weight:950;margin:8px 0 4px} .progress{height:8px;background:var(--bg2);border:1px solid var(--line);border-radius:99px;overflow:hidden} .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));border-radius:99px} .settings-box{margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--bg2)} .settings-box summary{font-weight:900;cursor:pointer} .settings-box[open] summary{margin-bottom:14px} .photo-upload{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center} .photo-preview{width:92px;height:92px;border-radius:24px;display:grid;place-items:center;overflow:hidden;border:1px solid var(--line);background:var(--panel2);font-size:2rem} .photo-preview img{width:100%;height:100%;object-fit:cover} .notification-list{display:grid;gap:9px} .notification-item{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel)} .notification-item b{display:block;margin-bottom:3px} .overlay{position:fixed;inset:0;background:rgba(3,5,8,.58);backdrop-filter:blur(8px);z-index:100;display:grid;place-items:center;padding:18px} .drawer{width:min(520px,100%);max-height:min(760px,88vh);overflow:auto} .drawer .section{padding:18px} .toast-wrap{position:fixed;right:15px;bottom:18px;z-index:140;display:grid;gap:8px} .toast{width:min(360px,calc(100vw - 30px));padding:12px 14px;border-radius:15px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow)} .toast b{display:block;margin-bottom:3px} .meter{height:9px;border-radius:99px;background:var(--bg2);overflow:hidden;margin:9px 0} .meter span{height:100%;display:block;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3),var(--accent4),var(--accent5))} .result-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px} .mini-stat{padding:9px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;text-align:center} .mini-stat strong{display:block;font-size:1.05rem} .graph-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--bg2);padding:8px} .network-svg{width:100%;min-width:620px;height:auto;display:block} .heatmap-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--bg2)} .heatmap{display:grid;min-width:max-content} .heat-row{display:grid;grid-template-columns:130px repeat(var(--cols),82px)} .heat-cell{min-height:58px;padding:7px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;place-items:center;text-align:center;font-size:.72rem} .heat-head{position:sticky;top:0;z-index:2;background:var(--panel2);font-weight:900} .heat-name{position:sticky;left:0;z-index:1;background:var(--panel2);font-weight:900;justify-items:start} .heat-score{font-size:1rem;font-weight:950} .legend{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px} .legend span{padding:6px 8px;border-radius:999px;border:1px solid var(--line);font-size:.72rem} .backline{display:flex;align-items:center;gap:10px;margin-bottom:14px} .cloud-status{display:flex;gap:8px;align-items:center} .status-dot{width:9px;height:9px;border-radius:50%;background:var(--muted)} .status-dot.on{background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 13%,transparent)} .mobile-nav{display:none} .empty{padding:18px;border:1px dashed var(--line);border-radius:15px;text-align:center;color:var(--muted)} .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:.74rem} .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent5)} @media(max-width:850px){ .cols-2,.cols-3,.stats{grid-template-columns:1fr} .shell{width:min(100% - 20px,1180px);padding-top:14px} .topbar{align-items:flex-start} .section{padding:16px} .photo-upload{grid-template-columns:1fr;text-align:center} .photo-preview{margin:auto} .result-meta{grid-template-columns:1fr 1fr 1fr} input,select,textarea{font-size:16px} .desktop-tabs{display:none} body{padding-bottom:78px} .mobile-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;position:fixed;left:10px;right:10px;bottom:10px;z-index:70;padding:8px;background:color-mix(in srgb,var(--panel) 95%,transparent);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)} .mobile-nav button{border:0;background:transparent;color:var(--muted);padding:10px 4px;border-radius:12px;font-weight:850} .mobile-nav button.active{background:var(--panel2);color:var(--text)} .slider-line{flex-direction:column;align-items:stretch} .score-pill{width:100%} } @media(max-width:560px){ .topbar{gap:10px} .top-actions .badge{display:none} .profile-head{align-items:flex-start} .avatar.lg{width:74px;height:74px;flex-basis:74px;border-radius:22px} .login-card{padding:20px} h1{font-size:2.55rem} } /* V4.2 — praia + botões sólidos */ .brand-mark{background:var(--aqua)!important;color:#073b4c!important} .btn.primary,.tab-btn.active{background:var(--aqua)!important;border-color:var(--aqua)!important;color:#073b4c!important} .btn.secondary{background:var(--sand)!important;border-color:var(--sand)!important;color:var(--deep)!important} .login-switch .btn.active{background:var(--mint)!important;border-color:var(--mint)!important;color:var(--deep)!important} .btn.danger{background:var(--deep)!important;border-color:var(--deep)!important;color:white!important} .btn.ghost{background:transparent!important} .dot-badge{background:var(--blue)!important} .event-card.new::before{background:var(--mint)!important;color:var(--deep)!important} .meter span{background:var(--ocean)!important} .progress span{background:var(--aqua)!important} .level-box{background:rgba(255,228,185,.30)!important;border-color:rgba(30,128,160,.16)!important} html[data-theme="dark"] .btn.primary,html[data-theme="dark"] .tab-btn.active{color:#062a38!important} html[data-theme="dark"] .btn.secondary,html[data-theme="dark"] .login-switch .btn.active{color:#0d2e92!important} </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- V4.1: Supabase é embutido no código; não há configuração técnica para players. -->
+</head>
+<body>
+<div class="shell">
+<div id="loginView"></div>
+<div id="playerView" class="hidden"></div>
+<div id="adminView" class="hidden"></div>
+</div>
+<div id="modalRoot"></div>
+<div class="toast-wrap" id="toastRoot"></div>
+<script>
+"use strict"; /* ========= APP / TEMA ========= */
+const APP_VERSION="4.2-beach-web";
+const LOCAL_KEY="ilhaDosLacosRPG_v4";
+const LEGACY_KEY="ilhaDosLacosRPG_v1";
+const SESSION_KEY="ilhaDosLacosSession_v4";
+const THEME_KEY="ilhaDosLacosTheme_v2";
+const CLOUD_KEY="ilhaDosLacosCloud_v1"; // mantido apenas para compatibilidade com versões antigas
+const PLAYER_EMAIL_DOMAIN="players.ilhadoslacos.local"; /* ========= SUPABASE EMBUTIDO ========= Use SOMENTE Project URL + Publishable/anon key. NUNCA coloque service_role ou secret key aqui. */
+const EMBEDDED_SUPABASE_URL="https://nybtpzzhiyjeclyhrtzw.supabase.co";
+const EMBEDDED_SUPABASE_KEY="sb_publishable_uvikJIXJuVJ5BbGojdERtA_-1zO4u0s"; let data=null;
+let cloud=null;
+let dataSource="local";
+let current={role:null,playerId:null,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null};
+let pendingInvites=[];
+let firstPhotoData="";
+let realtimeChannels=[];
+let reminderTimer=null; function esc(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function uid(prefix){return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,8)}`}
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function nowISO(){return new Date().toISOString()}
+function fmt(iso){if(!iso)return "—";try{return new Intl.DateTimeFormat("pt-BR",{dateStyle:"medium",timeStyle:"short"}).format(new Date(iso))}catch{return iso}}
+function levelFor(score){ const n=Number(score); if(n<=20)return "Curiosidade"; if(n<=40)return "Atração"; if(n<=60)return "Interesse"; if(n<=80)return "Conexão"; return "Paixão";
+}
+function levelClass(score){ const n=Number(score); if(n<=20)return "curiosity"; if(n<=40)return "attraction"; if(n<=60)return "interest"; if(n<=80)return "connection"; return "passion";
+}
+function mean(nums){const a=nums.filter(Number.isFinite);return a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0}
+function normalizeUsername(v){return v.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9._-]+/g,".").replace(/^\.+|\.+$/g,"")}
+function usernameEmail(u){return `${normalizeUsername(u)}@${PLAYER_EMAIL_DOMAIN}`}
+function embeddedCloudConfig(){ return {url:String(EMBEDDED_SUPABASE_URL||"").trim().replace(/\/+$/,""),anonKey:String(EMBEDDED_SUPABASE_KEY||"").trim()};
+}
+function cloudConfig(){ const embedded=embeddedCloudConfig(); if(/^https:\/\/.+\.supabase\.co$/i.test(embedded.url) && embedded.anonKey.length>30 && !embedded.url.includes("__SUPABASE_") && !embedded.anonKey.includes("__SUPABASE_")) return embedded; // Compatibilidade temporária para quem já configurou uma versão anterior neste aparelho. try{return JSON.parse(localStorage.getItem(CLOUD_KEY)||"{}")}catch{return {}}
+}
+function cloudConfigured(){const c=cloudConfig();return /^https:\/\/.+\.supabase\.co$/i.test(c.url||"") && String(c.anonKey||"").length>30}
+function cloudLabel(){return dataSource==="cloud"?"Nuvem conectada":"Servidor não configurado"} function resolvedTheme(mode){ if(mode==="system")return matchMedia && matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"; return mode;
+}
+function applyTheme(mode){ const safe=["system","light","dark"].includes(mode)?mode:"system"; const resolved=resolvedTheme(safe); document.documentElement.dataset.theme=resolved; const meta=document.querySelector('meta[name="theme-color"]'); if(meta)meta.content=resolved==="light"?"#f8f4f2":"#0f1218"; try{if(window.AndroidTheme)window.AndroidTheme.setTheme(safe)}catch{}
+}
+function setTheme(mode){localStorage.setItem(THEME_KEY,mode);applyTheme(mode);rerender()}
+function initTheme(){ applyTheme(localStorage.getItem(THEME_KEY)||"system"); if(window.matchMedia){ const mq=matchMedia("(prefers-color-scheme: light)"); const f=()=>{if((localStorage.getItem(THEME_KEY)||"system")==="system")applyTheme("system")}; mq.addEventListener?.("change",f); }
+} /* ========= DADOS LOCAIS + MIGRAÇÃO ========= */
+function blankData(){ return { settings:{adminPassword:"ilhaadmin"}, players:[], events:[], votes:{}, eventState:{} };
+}
+function migrateLegacy(x){ const out=blankData(); out.settings={...out.settings,...(x.settings||{})}; out.players=(x.players||[]).map((p,i)=>({ id:p.id||uid("p"),name:p.name||`Player ${i+1}`,shape:p.shape||"♥",code:p.code||generateAccessCode(), active:p.active!==false,username:p.username||"",password:p.password||"",firstLogin:p.firstLogin!==false, photo:p.photo||"",role:p.role||"player" })); out.events=(x.events||[]).map(e=>{ const startsAt=e.startsAt||e.date||new Date(Date.now()+86400000).toISOString(); const deadline=e.deadline||new Date(new Date(startsAt).getTime()+2*60*60*1000).toISOString(); return {id:e.id||uid("e"),title:e.title||"Evento",description:e.description||"",startsAt,deadline, reminderMinutes:Number(e.reminderMinutes||60),active:e.status?e.status==="active":e.active!==false, createdAt:e.createdAt||nowISO()}; }); out.votes=x.votes||{}; out.eventState=x.eventState||{}; return out;
+}
+function loadLocal(){ try{ const own=JSON.parse(localStorage.getItem(LOCAL_KEY)||"null"); if(own)return migrateLegacy(own); const legacy=JSON.parse(localStorage.getItem(LEGACY_KEY)||"null"); if(legacy){const m=migrateLegacy(legacy);localStorage.setItem(LOCAL_KEY,JSON.stringify(m));return m} }catch{} const d=blankData();localStorage.setItem(LOCAL_KEY,JSON.stringify(d));return d;
+}
+function saveLocal(){localStorage.setItem(LOCAL_KEY,JSON.stringify(data))}
+function getVote(from,to){return data?.votes?.[from]?.[to]}
+function localSetVote(from,to,score){ data.votes[from]||={}; data.votes[from][to]={score:Number(score),updatedAt:nowISO()}; saveLocal();
+}
+function generateAccessCode(){ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="ILHA-"; for(let i=0;i<6;i++)s+=chars[Math.floor(Math.random()*chars.length)]; return s;
+} /* ========= SUPABASE / NUVEM ========= */
+async function ensureCloud(){ if(!cloudConfigured() || !window.supabase)return null; if(cloud)return cloud; const cfg=cloudConfig(); cloud=window.supabase.createClient(cfg.url,cfg.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}}); return cloud;
+}
+function dbProfileToPlayer(p){ return {id:p.id,name:p.display_name,shape:p.shape||"♥",active:p.active!==false,username:p.username||"",photo:p.photo_data||"",firstLogin:false,role:p.role||"player"};
+}
+function dbEventToEvent(e){ return {id:e.id,title:e.title,description:e.description||"",startsAt:e.starts_at,deadline:e.deadline, reminderMinutes:Number(e.reminder_minutes||60),active:e.active!==false,createdAt:e.created_at};
+}
+async function cloudLoad(role,userId){ const s=await ensureCloud(); if(!s)throw new Error("Supabase não configurado."); const [pr,er,vr]=await Promise.all([ s.from("profiles").select("*").order("display_name"), s.from("events").select("*").order("starts_at",{ascending:true}), s.from("votes").select("*") ]); if(pr.error)throw pr.error;if(er.error)throw er.error;if(vr.error)throw vr.error; const out=blankData(); out.players=(pr.data||[]).map(dbProfileToPlayer); out.events=(er.data||[]).map(dbEventToEvent); out.votes={}; for(const v of (vr.data||[])){ out.votes[v.from_user]||={}; out.votes[v.from_user][v.to_user]={score:Number(v.score),updatedAt:v.updated_at}; } out.eventState={}; if(role==="player"){ const st=await s.from("player_event_state").select("*").eq("user_id",userId); if(st.error)throw st.error; out.eventState[userId]={}; for(const x of (st.data||[]))out.eventState[userId][x.event_id]={seenAt:x.seen_at,remindedAt:x.reminded_at}; } data=out;dataSource="cloud"; if(role==="admin")await loadCloudInvites(); return out;
+}
+async function loadCloudInvites(){ const s=await ensureCloud(); if(!s)return; const r=await s.from("player_invites").select("*").order("created_at",{ascending:false}); pendingInvites=r.error?[]:(r.data||[]);
+}
+async function saveVote(from,to,score){ if(dataSource==="local"){localSetVote(from,to,score);return} const s=await ensureCloud(); const r=await s.from("votes").upsert({from_user:from,to_user:to,score:Number(score),updated_at:nowISO()},{onConflict:"from_user,to_user"}); if(r.error)throw r.error; data.votes[from]||={};data.votes[from][to]={score:Number(score),updatedAt:nowISO()};
+}
+async function saveCloudProfilePhoto(playerId,photo){ const s=await ensureCloud();const r=await s.from("profiles").update({photo_data:photo}).eq("id",playerId); if(r.error)throw r.error;
+}
+async function refreshCloudData(){ if(dataSource!=="cloud" || !current.role)return; await cloudLoad(current.role,current.playerId); rerender(); if(current.role==="player"){scheduleReminders(current.playerId);await checkDeadlineReminders(current.playerId)}
+}
+function clearRealtime(){ if(cloud)for(const ch of realtimeChannels)try{cloud.removeChannel(ch)}catch{} realtimeChannels=[];
+}
+async function setupRealtime(role,userId){ clearRealtime();const s=await ensureCloud();if(!s)return; const eventsCh=s.channel("events-live") .on("postgres_changes",{event:"INSERT",schema:"public",table:"events"},async payload=>{ if(role==="player")notifyUser("Novo evento na ilha",payload.new.title||"Um novo evento foi publicado."); await refreshCloudData(); }) .on("postgres_changes",{event:"UPDATE",schema:"public",table:"events"},refreshCloudData) .on("postgres_changes",{event:"DELETE",schema:"public",table:"events"},refreshCloudData) .subscribe(); realtimeChannels.push(eventsCh); if(role==="admin"){ const votesCh=s.channel("votes-live") .on("postgres_changes",{event:"*",schema:"public",table:"votes"},refreshCloudData) .on("postgres_changes",{event:"*",schema:"public",table:"profiles"},refreshCloudData) .subscribe(); realtimeChannels.push(votesCh); }else{ const profilesCh=s.channel("profiles-live") .on("postgres_changes",{event:"UPDATE",schema:"public",table:"profiles"},refreshCloudData) .subscribe(); realtimeChannels.push(profilesCh); }
+} /* ========= LOGIN ========= */
+function showOnly(id){["loginView","playerView","adminView"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id))}
+function setLoginRole(role){ document.getElementById("playerLogin")?.classList.toggle("hidden",role!=="player"); document.getElementById("adminLogin")?.classList.toggle("hidden",role!=="admin"); document.getElementById("rolePlayer")?.classList.toggle("active",role==="player"); document.getElementById("roleAdmin")?.classList.toggle("active",role==="admin"); const err=document.getElementById("loginError");if(err)err.textContent="";
+}
+function setPlayerAccessMode(mode){ document.getElementById("normalPlayerLogin")?.classList.toggle("hidden",mode!=="login"); document.getElementById("firstPlayerLogin")?.classList.toggle("hidden",mode!=="first"); document.getElementById("normalAccessBtn")?.classList.toggle("active",mode==="login"); document.getElementById("firstAccessBtn")?.classList.toggle("active",mode==="first");
+}
+function renderLogin(){ dataSource=cloudConfigured()?"cloud":"local"; showOnly("loginView"); const isCloud=cloudConfigured(); document.getElementById("loginView").innerHTML=` <div class="topbar">
+<div class="brand"><div class="brand-mark">♥</div> Ilha do Desejo</div>
+<span class="badge"><span class="status-dot ${isCloud?"on":""}"></span>${isCloud?"Online":"Servidor indisponível"}</span>
+</div>
+<div class="login-wrap">
+<div class="card login-card">
+<div class="hero-kicker"></div>
+<h1>Conexões que mudam a cada escolha.</h1>
+<p class="muted">Entre com seu acesso. Votos recebidos continuam secretos para os jogadores.</p>
+<div class="role-tabs">
+<button id="rolePlayer" class="tab-btn active" onclick="setLoginRole('player')">Player</button>
+<button id="roleAdmin" class="tab-btn" onclick="setLoginRole('admin')">ADM</button>
+</div>
+<div id="playerLogin">
+<div class="login-switch">
+<button id="normalAccessBtn" class="btn small active" onclick="setPlayerAccessMode('login')">Já tenho acesso</button>
+<button id="firstAccessBtn" class="btn small" onclick="setPlayerAccessMode('first')">Primeiro acesso</button>
+</div>
+<div id="normalPlayerLogin" class="form-grid">
+<label>Nome de usuário<input id="playerUsernameInput" autocomplete="username" placeholder="Seu usuário"></label>
+<label>Senha<input id="playerPasswordInput" type="password" autocomplete="current-password" placeholder="Sua senha"></label>
+<button class="btn primary" onclick="loginPlayer()">Entrar</button>
+</div>
+<div id="firstPlayerLogin" class="form-grid hidden">
+<div class="notice">Use o código de primeiro acesso entregue pelo ADM.</div>
+<label>Código<input id="firstCodeInput" placeholder="ILHA-XXXXXX"></label>
+<label>Nome de usuário<input id="firstUsernameInput" autocomplete="username" placeholder="Crie seu usuário"></label>
+<label>Senha<input id="firstPasswordInput" type="password" autocomplete="new-password" placeholder="Mínimo 6 caracteres"></label>
+<label>Confirmar senha<input id="firstPassword2Input" type="password" autocomplete="new-password" placeholder="Repita a senha"></label>
+<label>Foto de perfil<input type="file" accept="image/*" onchange="previewFirstPhoto(event)"></label>
+<div class="photo-upload"><div id="firstPhotoPreview" class="photo-preview">♥</div><div class="muted">A imagem é comprimida antes de ser salva.</div></div>
+<button class="btn primary" onclick="completeFirstAccess()">Criar meu acesso</button>
+</div>
+</div>
+<div id="adminLogin" class="hidden">
+<div class="form-grid"> ${isCloud?`<label>E-mail do ADM<input id="adminEmailInput" type="email" autocomplete="username" placeholder="adm@exemplo.com"></label>`:""} <label>Senha do ADM<input id="adminPassInput" type="password" autocomplete="current-password" placeholder="Senha"></label>
+<button class="btn secondary" onclick="loginAdmin()">Abrir painel ADM</button>
+</div>
+</div>
+<div id="loginError" class="error"></div>
+</div>
+</div>`;
+}
+async function saveCloudSetup(){ toast("Configuração embutida","A conexão com a nuvem é definida no aplicativo e não precisa ser configurada pelo jogador.");
+}
+function disableCloud(){ toast("Nuvem obrigatória","Esta versão foi preparada para usar um único servidor compartilhado.");
+}
+async function loginAdmin(){ if(!cloudConfigured()){showLoginError("Servidor da temporada ainda não foi configurado.");return} const pass=document.getElementById("adminPassInput").value; if(cloudConfigured()){ try{ const email=document.getElementById("adminEmailInput").value.trim(); const s=await ensureCloud();const r=await s.auth.signInWithPassword({email,password:pass});if(r.error)throw r.error; const p=await s.from("profiles").select("*").eq("id",r.data.user.id).single(); if(p.error||p.data.role!=="admin"||p.data.active===false)throw new Error("Esta conta não possui perfil de administrador."); current={role:"admin",playerId:r.data.user.id,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null}; await cloudLoad("admin",current.playerId);sessionStorage.setItem(SESSION_KEY,JSON.stringify({role:"admin",playerId:current.playerId,cloud:true})); await setupRealtime("admin",current.playerId);renderAdmin("dashboard"); }catch(e){showLoginError(e.message||"Não foi possível entrar como ADM.")} return; } data=loadLocal(); if(pass!==data.settings.adminPassword){showLoginError("Senha ADM incorreta.");return} current={role:"admin",playerId:"local_admin",playerTab:"profile",adminTab:"dashboard",detailPlayerId:null}; sessionStorage.setItem(SESSION_KEY,JSON.stringify({role:"admin",cloud:false}));renderAdmin("dashboard");
+}
+async function completeFirstAccess(){ if(!cloudConfigured()){showLoginError("Servidor da temporada ainda não foi configurado.");return} const code=document.getElementById("firstCodeInput").value.trim(); const username=document.getElementById("firstUsernameInput").value.trim(); const pass=document.getElementById("firstPasswordInput").value; const pass2=document.getElementById("firstPassword2Input").value; if(normalizeUsername(username).length<3){showLoginError("Crie um usuário com pelo menos 3 caracteres.");return} if(pass.length<6){showLoginError("A senha precisa ter pelo menos 6 caracteres.");return} if(pass!==pass2){showLoginError("As senhas não coincidem.");return} if(cloudConfigured()){ try{ const s=await ensureCloud();const email=usernameEmail(username); let auth=await s.auth.signUp({email,password:pass}); if(auth.error){ auth=await s.auth.signInWithPassword({email,password:pass}); if(auth.error)throw auth.error; } if(!auth.data.session)throw new Error("O Supabase está exigindo confirmação de e-mail. Desative 'Confirm email' para este projeto."); const claim=await s.rpc("claim_player_invite",{p_code:code,p_username:username}); if(claim.error)throw claim.error; if(firstPhotoData){ const u=await s.from("profiles").update({photo_data:firstPhotoData}).eq("id",auth.data.user.id);if(u.error)throw u.error; } current={role:"player",playerId:auth.data.user.id,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null}; await cloudLoad("player",current.playerId);sessionStorage.setItem(SESSION_KEY,JSON.stringify({role:"player",playerId:current.playerId,cloud:true})); firstPhotoData="";await setupRealtime("player",current.playerId);renderPlayer("profile");scheduleReminders(current.playerId);startReminderLoop(); }catch(e){showLoginError(e.message||"Falha no primeiro acesso.")} return; } data=loadLocal(); const p=data.players.find(x=>x.active&&x.code===code&&x.firstLogin!==false); if(!p){showLoginError("Código inválido ou já utilizado.");return} if(data.players.some(x=>x.id!==p.id&&(x.username||"").toLowerCase()===username.toLowerCase())){showLoginError("Esse usuário já existe.");return} p.username=username;p.password=pass;p.photo=firstPhotoData||"";p.firstLogin=false;saveLocal();firstPhotoData=""; current={role:"player",playerId:p.id,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null}; sessionStorage.setItem(SESSION_KEY,JSON.stringify({role:"player",playerId:p.id,cloud:false}));renderPlayer("profile");scheduleReminders(p.id);startReminderLoop();
+}
+async function logout(){ stopReminderLoop();clearRealtime(); if(cloudConfigured()&&cloud)try{await cloud.auth.signOut()}catch{} sessionStorage.removeItem(SESSION_KEY);current={role:null,playerId:null,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null};renderLogin();
+} /* ========= FOTO ========= */
+function resizeImage(file,maxSize=420,quality=.74){ return new Promise((resolve,reject)=>{ const r=new FileReader();r.onload=()=>{ const img=new Image();img.onload=()=>{ const ratio=Math.min(1,maxSize/Math.max(img.width,img.height)); const c=document.createElement("canvas");c.width=Math.round(img.width*ratio);c.height=Math.round(img.height*ratio); c.getContext("2d").drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",quality)); };img.onerror=reject;img.src=r.result; };r.onerror=reject;r.readAsDataURL(file); });
+}
+async function previewFirstPhoto(ev){ const f=ev.target.files?.[0];if(!f||!f.type.startsWith("image/"))return; firstPhotoData=await resizeImage(f);document.getElementById("firstPhotoPreview").innerHTML=`<img src="${firstPhotoData}" alt="Prévia">`;
+}
+function avatarHTML(p,size=""){ const cls=`avatar ${size}`.trim(); if(p.photo)return `<div class="${cls}"><img src="${p.photo}" alt="${esc(p.name)}"></div>`; return `<div class="${cls}">${esc((p.shape||p.name?.[0]||"♥").slice(0,3))}</div>`;
+}
+async function changePlayerPhoto(ev){ const f=ev.target.files?.[0];if(!f||!f.type.startsWith("image/"))return; const photo=await resizeImage(f);const p=data.players.find(x=>x.id===current.playerId);if(!p)return; p.photo=photo; if(dataSource==="cloud")await saveCloudProfilePhoto(p.id,photo);else saveLocal(); renderPlayer("profile");toast("Perfil atualizado","Sua foto de perfil foi alterada.");
+}
+async function removePlayerPhoto(){ const p=data.players.find(x=>x.id===current.playerId);if(!p)return;p.photo=""; if(dataSource==="cloud")await saveCloudProfilePhoto(p.id,"");else saveLocal();renderPlayer("profile");
+} /* ========= PLAYER: NAVEGAÇÃO EM JANELAS ========= */
+function playerNav(active){ return ` <div class="app-tabs desktop-tabs">
+<button class="tab-btn ${active==="profile"?"active":""}" onclick="renderPlayer('profile')">Perfil</button>
+<button class="tab-btn ${active==="events"?"active":""}" onclick="renderPlayer('events')">Eventos</button>
+<button class="tab-btn ${active==="vote"?"active":""}" onclick="renderPlayer('vote')">Votar</button>
+</div>`;
+}
+function mobilePlayerNav(active){ return `<div class="mobile-nav">
+<button class="${active==="profile"?"active":""}" onclick="renderPlayer('profile')">◉<br><small>Perfil</small></button>
+<button class="${active==="events"?"active":""}" onclick="renderPlayer('events')">◆<br><small>Eventos</small></button>
+<button class="${active==="vote"?"active":""}" onclick="renderPlayer('vote')">♥<br><small>Votar</small></button>
+</div>`;
+}
+function eventState(playerId,eventId){ return data.eventState?.[playerId]?.[eventId]||{};
+}
+function unreadEvents(playerId){ return data.events.filter(e=>e.active&&!eventState(playerId,e.id).seenAt).length;
+}
+function playerNotifications(playerId){ const now=Date.now(),items=[]; for(const e of data.events.filter(x=>x.active)){ const st=eventState(playerId,e.id); if(!st.seenAt)items.push({kind:"new",event:e,title:"Novo evento",body:e.title}); const dl=new Date(e.deadline).getTime(),rem=Number(e.reminderMinutes||60)*60000; if(now>=dl-rem&&now<dl&&!st.remindedAt)items.push({kind:"deadline",event:e,title:"Prazo terminando",body:`${e.title} termina ${fmt(e.deadline)}.`}); } return items.sort((a,b)=>new Date(a.event.deadline)-new Date(b.event.deadline));
+}
+function playerTopbar(me){ const count=playerNotifications(me.id).length; return `<div class="topbar">
+<div class="brand"><div class="brand-mark">♥</div> Ilha do Desejo</div>
+<div class="top-actions">
+<span class="badge"><span class="status-dot ${dataSource==="cloud"?"on":""}"></span>${cloudLabel()}</span>
+<button class="btn icon" aria-label="Notificações" onclick="openNotifications()"> ♫${count?`<span class="dot-badge">${count}</span>`:""} </button>
+<button class="btn small ghost" onclick="logout()">Sair</button>
+</div>
+</div>`;
+}
+function renderPlayer(tab="profile"){ current.playerTab=tab;const me=data.players.find(p=>p.id===current.playerId&&p.active); if(!me){logout();return} showOnly("playerView"); let content=""; if(tab==="profile")content=playerProfileHTML(me); if(tab==="events")content=playerEventsHTML(me); if(tab==="vote")content=playerVoteHTML(me); if(tab==="settings")content=playerSettingsHTML(me); document.getElementById("playerView").innerHTML=`${playerTopbar(me)}${playerNav(tab)}<main class="page-window">${content}</main>${mobilePlayerNav(tab)}`; if(tab==="events")markEventsSeen(me.id);
+}
+function playerProfileHTML(me){ return `<section class="card section">
+<div class="split">
+<div class="profile-head">${avatarHTML(me,"lg")}<div><div class="hero-kicker">Seu perfil</div><h2>${esc(me.name)}</h2><div class="muted">@${esc(me.username||"player")}</div></div></div>
+<button class="btn icon" onclick="renderPlayer('settings')" title="Configurações">⚙</button>
+</div>
+<div class="row" style="margin-top:16px">
+<label class="btn small">Trocar foto<input type="file" accept="image/*" style="display:none" onchange="changePlayerPhoto(event)"></label> ${me.photo?`<button class="btn small ghost" onclick="removePlayerPhoto()">Remover foto</button>`:""} </div>
+<div class="notice" style="margin-top:16px">Suas notas dadas podem ser alteradas a qualquer momento. Notas recebidas permanecem privadas para você.</div>
+</section>`;
+}
+function playerSettingsHTML(me){ const theme=localStorage.getItem(THEME_KEY)||"system"; return `<div class="backline"><button class="btn small ghost" onclick="renderPlayer('profile')">← Perfil</button><div><b>Configurações</b><div class="muted">Preferências ficam fora da tela principal.</div></div></div>
+<div class="grid cols-2">
+<section class="card section">
+<div class="hero-kicker">Aparência</div><h2>Tema</h2>
+<label>Modo<select onchange="setTheme(this.value)">
+<option value="system" ${theme==="system"?"selected":""}>Seguir sistema</option>
+<option value="light" ${theme==="light"?"selected":""}>Claro</option>
+<option value="dark" ${theme==="dark"?"selected":""}>Escuro</option>
+</select></label>
+</section>
+<section class="card section">
+<div class="hero-kicker">Alertas</div><h2>Notificações</h2>
+<p class="muted">Receba novos eventos e lembretes de prazo. No Android, os lembretes podem ser agendados pelo aplicativo.</p>
+<button class="btn primary" onclick="requestNotificationPermission()">Ativar notificações</button>
+</section>
+</div>`;
+}
+function countdownInfo(e){ const now=Date.now(),start=new Date(e.startsAt).getTime(),end=new Date(e.deadline).getTime(); if(now>=end)return {text:"Prazo encerrado",pct:100,ended:true}; const d=end-now; const days=Math.floor(d/86400000),hrs=Math.floor((d%86400000)/3600000),mins=Math.floor((d%3600000)/60000); const text=days>0?`${days}d ${hrs}h restantes`:hrs>0?`${hrs}h ${mins}min restantes`:`${Math.max(0,mins)} min restantes`; const total=Math.max(1,end-start);const pct=Math.max(0,Math.min(100,((now-start)/total)*100)); return {text,pct,ended:false};
+}
+function playerEventsHTML(me){ const events=[...data.events].filter(e=>e.active).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)); return `<section class="card section">
+<div class="split"><div><div class="hero-kicker">Agenda da ilha</div><h2>Eventos</h2><p class="muted">Cada evento mostra início, prazo e lembrete configurado pelo ADM.</p></div><button class="btn small" onclick="openNotifications()">Notificações</button></div>
+<div class="stack"> ${events.map(e=>{ const c=countdownInfo(e),isNew=!eventState(me.id,e.id).seenAt; return `<article class="event-card ${isNew?"new":""}">
+<div class="event-time">INÍCIO • ${esc(fmt(e.startsAt))}</div>
+<h3 style="margin:7px 0">${esc(e.title)}</h3>
+<p class="muted">${esc(e.description||"Sem descrição.")}</p>
+<div class="deadline">PRAZO • ${esc(fmt(e.deadline))}</div>
+<div class="countdown">${esc(c.text)}</div>
+<div class="progress"><span style="width:${c.pct}%"></span></div>
+<div class="muted" style="font-size:.75rem;margin-top:8px">Lembrete: ${e.reminderMinutes} min antes do prazo.</div>
+</article>` }).join("")||`<div class="empty">Nenhum evento ativo.</div>`} </div>
+</section>`;
+}
+function playerVoteHTML(me){ const others=data.players.filter(p=>p.active&&p.role!=="admin"&&p.id!==me.id); return `<section class="card section">
+<div class="hero-kicker">Votação privada</div><h2>Como você se sente?</h2>
+<p class="muted">Arraste a escala. Você vê apenas as notas que você mesmo dá.</p>
+<div class="grid cols-2"> ${others.map(p=>{ const v=getVote(me.id,p.id),score=v?.score??0; return `<article class="player-card">
+<div class="player-top">${avatarHTML(p,"sm")}<div><b>${esc(p.name)}</b><div class="muted">${esc(p.shape||"")}</div></div></div>
+<div class="slider-line">
+<input type="range" min="0" max="100" value="${score}" aria-label="Voto para ${esc(p.name)}" oninput="updateVoteUI('${p.id}',this.value)">
+<div class="score-pill" id="score_${p.id}">${score}</div>
+</div>
+<div class="level-box" id="level_${p.id}">${levelFor(score)}${v?" • salvo":""}</div>
+</article>` }).join("")||`<div class="empty">Ainda não há outros jogadores ativos.</div>`} </div>
+</section>`;
+}
+async function updateVoteUI(to,val){ const score=document.getElementById(`score_${to}`),level=document.getElementById(`level_${to}`); if(score)score.textContent=val;if(level)level.textContent=`${levelFor(val)} • salvando…`; try{await saveVote(current.playerId,to,Number(val));if(level)level.textContent=`${levelFor(val)} • salvo`}catch(e){if(level)level.textContent="Erro ao salvar";toast("Falha ao votar",e.message||"Tente novamente.")}
+} /* ========= NOTIFICAÇÕES ========= */
+function openNotifications(){ if(current.role!=="player")return; const items=playerNotifications(current.playerId); document.getElementById("modalRoot").innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div class="card drawer"><div class="section">
+<div class="split"><div><div class="hero-kicker">Central</div><h2>Notificações</h2></div><button class="btn icon ghost" onclick="closeModal()">×</button></div>
+<div class="notification-list"> ${items.map(n=>`<div class="notification-item"><b>${esc(n.title)}</b><div class="muted">${esc(n.body)}</div><button class="btn small ghost" style="margin-top:7px" onclick="closeModal();renderPlayer('events')">Ver evento</button></div>`).join("")||`<div class="empty">Nenhuma notificação pendente.</div>`} </div>
+<div class="row" style="margin-top:13px"><button class="btn small" onclick="markEventsSeen(current.playerId);closeModal();rerender()">Marcar eventos como vistos</button><button class="btn small primary" onclick="requestNotificationPermission()">Ativar alertas</button></div>
+</div></div></div>`;
+}
+function closeModal(){document.getElementById("modalRoot").innerHTML=""}
+function toast(title,body){ const id=uid("toast"),root=document.getElementById("toastRoot"); root.insertAdjacentHTML("beforeend",`<div class="toast" id="${id}"><b>${esc(title)}</b><div class="muted">${esc(body||"")}</div></div>`); setTimeout(()=>document.getElementById(id)?.remove(),4500);
+}
+function notifyUser(title,body){ toast(title,body); try{ if(window.AndroidNotify){window.AndroidNotify.notifyNow(title,body);return} if("Notification"in window&&Notification.permission==="granted")new Notification(title,{body}); }catch{}
+}
+async function requestNotificationPermission(){ try{if(window.AndroidNotify)window.AndroidNotify.requestPermission()}catch{} if("Notification"in window){ try{const p=await Notification.requestPermission();toast("Notificações",p==="granted"?"Ativadas neste dispositivo.":"Permissão não concedida.")}catch{} }else toast("Notificações","O navegador não oferece notificações do sistema.");
+}
+async function markEventsSeen(playerId){ const active=data.events.filter(e=>e.active); data.eventState[playerId]||={}; if(dataSource==="local"){ for(const e of active)data.eventState[playerId][e.id]={...eventState(playerId,e.id),seenAt:nowISO()}; saveLocal();return; } const s=await ensureCloud(); for(const e of active){ const st=eventState(playerId,e.id),seenAt=st.seenAt||nowISO(); const r=await s.from("player_event_state").upsert({user_id:playerId,event_id:e.id,seen_at:seenAt,reminded_at:st.remindedAt||null},{onConflict:"user_id,event_id"}); if(!r.error){data.eventState[playerId]||={};data.eventState[playerId][e.id]={seenAt,remindedAt:st.remindedAt||null}} }
+}
+async function markReminder(playerId,eventId){ data.eventState[playerId]||={};const st=eventState(playerId,eventId),ts=nowISO(); data.eventState[playerId][eventId]={seenAt:st.seenAt||null,remindedAt:ts}; if(dataSource==="local"){saveLocal();return} const s=await ensureCloud();await s.from("player_event_state").upsert({user_id:playerId,event_id:eventId,seen_at:st.seenAt||null,reminded_at:ts},{onConflict:"user_id,event_id"});
+}
+async function checkDeadlineReminders(playerId){ if(current.role!=="player"||current.playerId!==playerId)return; const now=Date.now(); for(const e of data.events.filter(x=>x.active)){ const deadline=new Date(e.deadline).getTime(),at=deadline-Number(e.reminderMinutes||60)*60000,st=eventState(playerId,e.id); if(now>=at&&now<deadline&&!st.remindedAt){ notifyUser("Prazo terminando",`${e.title} termina ${fmt(e.deadline)}.`); await markReminder(playerId,e.id); } }
+}
+function scheduleReminders(playerId){ if(current.role!=="player"||!window.AndroidNotify)return; for(const e of data.events.filter(x=>x.active)){ const when=new Date(e.deadline).getTime()-Number(e.reminderMinutes||60)*60000; if(when>Date.now()){ try{window.AndroidNotify.schedule(e.id,"Prazo terminando",`${e.title} termina ${fmt(e.deadline)}.`,Math.floor(when))}catch{} } }
+}
+function startReminderLoop(){stopReminderLoop();reminderTimer=setInterval(()=>checkDeadlineReminders(current.playerId),60000);checkDeadlineReminders(current.playerId)}
+function stopReminderLoop(){if(reminderTimer)clearInterval(reminderTimer);reminderTimer=null} /* ========= RESULTADOS ADM ========= */
+function allConnections(){ const players=data.players.filter(p=>p.active&&p.role!=="admin"),out=[]; for(let i=0;i<players.length;i++)for(let j=i+1;j<players.length;j++){ const a=players[i],b=players[j],ab=getVote(a.id,b.id)?.score,ba=getVote(b.id,a.id)?.score; const complete=Number.isFinite(ab)&&Number.isFinite(ba),score=complete?Math.round((ab+ba)/2):null; out.push({a,b,ab,ba,complete,score,match:complete&&ab>=61&&ba>=61}); } return out.sort((x,y)=>(y.score??-1)-(x.score??-1));
+}
+function playerInsight(p){ const players=data.players.filter(x=>x.active&&x.role!=="admin"&&x.id!==p.id); const outgoing=players.map(x=>({player:x,score:getVote(p.id,x.id)?.score})).filter(x=>Number.isFinite(x.score)).sort((a,b)=>b.score-a.score); const incoming=players.map(x=>({player:x,score:getVote(x.id,p.id)?.score})).filter(x=>Number.isFinite(x.score)).sort((a,b)=>b.score-a.score); const matches=players.map(x=>{ const out=getVote(p.id,x.id)?.score,inc=getVote(x.id,p.id)?.score; return {player:x,out,inc,score:Number.isFinite(out)&&Number.isFinite(inc)?Math.round((out+inc)/2):null} }).filter(x=>Number.isFinite(x.out)&&Number.isFinite(x.inc)&&x.out>=61&&x.inc>=61).sort((a,b)=>b.score-a.score); return {outgoing,incoming,matches,outAvg:mean(outgoing.map(x=>x.score)),inAvg:mean(incoming.map(x=>x.score))};
+}
+function resultPlayerCard(p){ const i=playerInsight(p),top=i.matches[0]; return `<article class="result-player-card" onclick="renderAdmin('playerDetail','${p.id}')">
+<div class="player-top">${avatarHTML(p,"sm")}<div style="flex:1"><b>${esc(p.name)}</b><div class="muted">@${esc(p.username||"player")}</div></div><span class="tag">Abrir →</span></div>
+<div class="result-meta">
+<div class="mini-stat"><strong>${i.inAvg}</strong><span class="muted">média recebida</span></div>
+<div class="mini-stat"><strong>${i.outAvg}</strong><span class="muted">média dada</span></div>
+<div class="mini-stat"><strong>${i.matches.length}</strong><span class="muted">matches</span></div>
+</div> ${top?`<div class="muted" style="margin-top:10px">Top match: <b>${esc(top.player.name)}</b> • ${top.score}/100</div>`:""} </article>`;
+}
+function heatCell(score){ if(!Number.isFinite(score))return `<div class="heat-cell"><span class="muted">—</span></div>`; const pct=Math.max(8,Math.round(score)); return `<div class="heat-cell" style="background:color-mix(in srgb,var(--accent2) ${pct}%,var(--panel));"><div><div class="heat-score">${score}</div><div>${levelFor(score)}</div></div></div>`;
+}
+function heatmapHTML(){ const ps=data.players.filter(p=>p.active&&p.role!=="admin"); return `<div class="heatmap-wrap"><div class="heatmap" style="--cols:${ps.length}">
+<div class="heat-row"><div class="heat-cell heat-head heat-name">Quem votou ↓</div>${ps.map(p=>`<div class="heat-cell heat-head">${esc(p.name)}</div>`).join("")}</div> ${ps.map(from=>`<div class="heat-row"><div class="heat-cell heat-name">${avatarHTML(from,"sm")}<span>${esc(from.name)}</span></div>${ps.map(to=>from.id===to.id?`<div class="heat-cell">•</div>`:heatCell(getVote(from.id,to.id)?.score)).join("")}</div>`).join("")} </div></div>
+<div class="legend"><span>0–20 Curiosidade</span><span>21–40 Atração</span><span>41–60 Interesse</span><span>61–80 Conexão</span><span>81–100 Paixão</span></div>`;
+}
+function networkGraphHTML(){ const ps=data.players.filter(p=>p.active&&p.role!=="admin"),cons=allConnections().filter(c=>c.complete); if(ps.length<2)return `<div class="empty">Adicione pelo menos dois players.</div>`; const W=720,H=440,cx=W/2,cy=H/2,r=Math.min(170,70+ps.length*15); const pos={};ps.forEach((p,i)=>{const a=(Math.PI*2*i/ps.length)-Math.PI/2;pos[p.id]={x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r}}); const edges=cons.map(c=>{ const a=pos[c.a.id],b=pos[c.b.id],width=1+((c.score||0)/100)*6,op=.18+((c.score||0)/100)*.75; return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" style="stroke:${c.match?"var(--accent3)":"var(--accent2)"};stroke-width:${width};opacity:${op}" />
+<text x="${(a.x+b.x)/2}" y="${(a.y+b.y)/2-5}" text-anchor="middle" style="fill:var(--text);font-size:12px;font-weight:900">${c.score}</text>`; }).join(""); const nodes=ps.map(p=>{ const o=pos[p.id],label=(p.shape||p.name[0]||"♥").slice(0,2); return `<g onclick="renderAdmin('playerDetail','${p.id}')" style="cursor:pointer">
+<circle cx="${o.x}" cy="${o.y}" r="32" style="fill:var(--panel);stroke:var(--accent);stroke-width:2"/>
+<text x="${o.x}" y="${o.y-2}" text-anchor="middle" dominant-baseline="middle" style="fill:var(--text);font-size:19px">${esc(label)}</text>
+<text x="${o.x}" y="${o.y+49}" text-anchor="middle" style="fill:var(--text);font-size:13px;font-weight:900">${esc(p.name)}</text>
+</g>`; }).join(""); return `<div class="graph-wrap"><svg class="network-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mapa de conexões">${edges}${nodes}</svg></div>
+<div class="muted" style="font-size:.78rem;margin-top:8px">Linhas mais grossas indicam conexão média maior. Linhas em destaque representam match: ambos deram 61 ou mais.</div>`;
+} /* ========= ADM ========= */
+function adminNav(active){ const a=active==="playerDetail"?"results":active; return `<div class="app-tabs"> ${[["dashboard","Visão geral"],["players","Players"],["events","Eventos"],["results","Resultados"],["settings","Configurações"]].map(([id,label])=>`<button class="tab-btn ${a===id?"active":""}" onclick="renderAdmin('${id}')">${label}</button>`).join("")} </div>`;
+}
+function adminTopbar(){ return `<div class="topbar"><div class="brand"><div class="brand-mark">♛</div> Ilha do Desejo — ADM</div><div class="top-actions"><span class="badge"><span class="status-dot ${dataSource==="cloud"?"on":""}"></span>${cloudLabel()}</span><button class="btn small ghost" onclick="logout()">Sair</button></div></div>`;
+}
+function totalVotes(){let n=0;Object.values(data.votes||{}).forEach(x=>n+=Object.keys(x||{}).length);return n}
+function renderAdmin(tab="dashboard",detailId=null){ current.adminTab=tab;current.detailPlayerId=detailId||null;showOnly("adminView"); let content=""; if(tab==="dashboard")content=adminDashboardHTML(); if(tab==="players")content=adminPlayersHTML(); if(tab==="events")content=adminEventsHTML(); if(tab==="results")content=adminResultsHTML(); if(tab==="playerDetail")content=adminPlayerDetailHTML(detailId); if(tab==="settings")content=adminSettingsHTML(); document.getElementById("adminView").innerHTML=`${adminTopbar()}${adminNav(tab)}<main class="page-window">${content}</main><div class="footer">Resultados e votos recebidos são visíveis somente para administradores.</div>`;
+}
+function adminDashboardHTML(){ const ps=data.players.filter(p=>p.active&&p.role!=="admin"),cons=allConnections(),matches=cons.filter(c=>c.match); return `<div class="stats">
+<div class="stat"><span class="muted">Players ativos</span><strong>${ps.length}</strong></div>
+<div class="stat"><span class="muted">Votos registrados</span><strong>${totalVotes()}</strong></div>
+<div class="stat"><span class="muted">Eventos ativos</span><strong>${data.events.filter(e=>e.active).length}</strong></div>
+<div class="stat"><span class="muted">Matches</span><strong>${matches.length}</strong></div>
+</div>
+<div class="grid cols-2" style="margin-top:16px">
+<section class="card section"><div class="hero-kicker">Rede</div><h2>Mapa rápido de conexões</h2>${networkGraphHTML()}</section>
+<section class="card section"><div class="hero-kicker">Prazos</div><h2>Eventos mais próximos</h2><div class="stack"> ${data.events.filter(e=>e.active).sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)).slice(0,4).map(e=>{const c=countdownInfo(e);return `<div class="event-card"><b>${esc(e.title)}</b><div class="deadline">${esc(c.text)}</div><div class="muted">${esc(fmt(e.deadline))}</div></div>`}).join("")||`<div class="empty">Sem eventos ativos.</div>`} </div></section>
+</div>`;
+}
+function adminPlayersHTML(){ const players=data.players.filter(p=>p.role!=="admin"); return `<div class="grid cols-2">
+<section class="card section">
+<div class="hero-kicker">Acesso</div><h2>Criar convite de player</h2>
+<div class="form-grid">
+<label>Nome de exibição<input id="inviteName" placeholder="Nome do participante"></label>
+<label>Shape / símbolo<input id="inviteShape" placeholder="Ex.: 🌙"></label>
+<label>Código de primeiro acesso<input id="inviteCode" placeholder="Deixe vazio para gerar"></label>
+<button class="btn primary" onclick="addPlayerInvite()">Gerar convite</button>
+<div id="playerFormMsg" class="error"></div>
+</div> ${dataSource==="cloud"?`<div class="notice" style="margin-top:14px">Na nuvem, o cadastro definitivo é criado quando o player usa o convite no primeiro acesso.</div>`:""} </section>
+<section class="card section"><div class="hero-kicker">Participantes</div><h2>Players cadastrados</h2><div class="stack"> ${players.map(p=>`<div class="player-card"><div class="player-top">${avatarHTML(p,"sm")}<div style="flex:1"><b>${esc(p.name)}</b><div class="muted">${p.firstLogin?`Código: <span class="code">${esc(p.code)}</span>`:`@${esc(p.username||"—")}`}</div></div><button class="btn small ${p.active?"danger":"secondary"}" onclick="togglePlayer('${p.id}')">${p.active?"Desativar":"Ativar"}</button></div></div>`).join("")||`<div class="empty">Nenhum player cadastrado.</div>`} </div></section>
+</div> ${dataSource==="cloud"?`<section class="card section" style="margin-top:16px"><div class="hero-kicker">Pendentes</div><h2>Convites ainda não utilizados</h2><div class="stack">${pendingInvites.filter(i=>i.active&& !i.claimed_by).map(i=>`<div class="player-card"><div class="split"><div><b>${esc(i.display_name)}</b><div class="muted">Código: <span class="code">${esc(i.code)}</span> • ${esc(i.shape||"♥")}</div></div><button class="btn small danger" onclick="revokeInvite('${i.id}')">Revogar</button></div></div>`).join("")||`<div class="empty">Nenhum convite pendente.</div>`}</div></section>`:""}`;
+}
+function adminEventsHTML(){ return `<div class="grid cols-2">
+<section class="card section">
+<div class="hero-kicker">Exclusivo ADM</div><h2>Criar evento</h2>
+<div class="form-grid">
+<label>Título<input id="eventTitle" placeholder="Ex.: Encontro no mirante"></label>
+<label>Início<input id="eventStart" type="datetime-local"></label>
+<label>Prazo final<input id="eventDeadline" type="datetime-local"></label>
+<label>Lembrete<select id="eventReminder"><option value="15">15 min antes</option><option value="30">30 min antes</option><option value="60" selected>1 hora antes</option><option value="180">3 horas antes</option><option value="720">12 horas antes</option><option value="1440">1 dia antes</option></select></label>
+<label>Descrição<textarea id="eventDescription" placeholder="O que os players precisam saber?"></textarea></label>
+<button class="btn secondary" onclick="addEvent()">Publicar evento</button><div id="eventFormMsg" class="error"></div>
+</div>
+</section>
+<section class="card section"><div class="hero-kicker">Agenda</div><h2>Gerenciar eventos</h2><div class="stack"> ${data.events.sort((a,b)=>new Date(a.deadline)-new Date(b.deadline)).map(e=>{const c=countdownInfo(e);return `<article class="event-card"><div class="event-time">${e.active?"ATIVO":"ENCERRADO"} • ${esc(fmt(e.startsAt))}</div><h3 style="margin:6px 0">${esc(e.title)}</h3><p class="muted">${esc(e.description||"")}</p><div class="deadline">Prazo: ${esc(fmt(e.deadline))} • ${esc(c.text)}</div><div class="row" style="margin-top:10px"><button class="btn small" onclick="toggleEvent('${e.id}')">${e.active?"Encerrar":"Reabrir"}</button><button class="btn small danger" onclick="deleteEvent('${e.id}')">Excluir</button></div></article>`}).join("")||`<div class="empty">Nenhum evento criado.</div>`} </div></section>
+</div>`;
+}
+function adminResultsHTML(){ const ps=data.players.filter(p=>p.active&&p.role!=="admin"); return `<section class="card section">
+<div class="split"><div><div class="hero-kicker">Resultados por pessoa</div><h2>Players e conexões</h2><p class="muted">Clique em um perfil para abrir interesses, quem se interessou e matches.</p></div><button class="btn small" onclick="exportData()">Exportar</button></div>
+<div class="grid cols-2">${ps.map(resultPlayerCard).join("")||`<div class="empty">Sem players ativos.</div>`}</div>
+</section>
+<section class="card section" style="margin-top:16px"><div class="hero-kicker">Mapa gráfico</div><h2>Rede de conexões</h2>${networkGraphHTML()}</section>
+<section class="card section" style="margin-top:16px"><div class="hero-kicker">Leitura visual</div><h2>Mapa de calor dos votos</h2><p class="muted">Linhas = quem deu a nota. Colunas = quem recebeu.</p>${heatmapHTML()}</section>`;
+}
+function scoreListHTML(items,empty){ return items.map(x=>`<div class="connection-card"><div class="player-top">${avatarHTML(x.player,"sm")}<div style="flex:1"><b>${esc(x.player.name)}</b><div class="muted">${levelFor(x.score)}</div></div><span class="tag">${x.score}/100</span></div><div class="meter"><span style="width:${x.score}%"></span></div></div>`).join("")||`<div class="empty">${esc(empty)}</div>`;
+}
+function adminPlayerDetailHTML(id){ const p=data.players.find(x=>x.id===id);if(!p)return `<div class="empty">Player não encontrado.</div>`; const i=playerInsight(p); return `<div class="backline"><button class="btn small ghost" onclick="renderAdmin('results')">← Resultados</button><div><b>Detalhes de ${esc(p.name)}</b><div class="muted">Aba privada do ADM</div></div></div>
+<section class="card section"><div class="profile-head">${avatarHTML(p,"lg")}<div><div class="hero-kicker">Perfil de conexão</div><h2>${esc(p.name)}</h2><div class="row"><span class="tag">Média recebida ${i.inAvg}</span><span class="tag">Média dada ${i.outAvg}</span><span class="tag">${i.matches.length} matches</span></div></div></div></section>
+<div class="grid cols-3" style="margin-top:16px">
+<section class="card section"><div class="hero-kicker">Interesses</div><h2>Quem ${esc(p.name)} escolheu</h2><div class="stack">${scoreListHTML(i.outgoing,"Nenhum voto dado.")}</div></section>
+<section class="card section"><div class="hero-kicker">Recebidos</div><h2>Quem se interessa por ${esc(p.name)}</h2><div class="stack">${scoreListHTML(i.incoming,"Nenhum voto recebido.")}</div></section>
+<section class="card section"><div class="hero-kicker">Recíprocos</div><h2>Matches</h2><div class="stack">${i.matches.map(x=>`<div class="connection-card"><div class="player-top">${avatarHTML(x.player,"sm")}<div style="flex:1"><b>${esc(x.player.name)}</b><div class="muted">${x.out} ↔ ${x.inc}</div></div><span class="tag">${x.score}/100</span></div><div class="meter"><span style="width:${x.score}%"></span></div></div>`).join("")||`<div class="empty">Nenhum match (ambos precisam marcar 61+).</div>`}</div></section>
+</div>`;
+}
+function adminSettingsHTML(){ const theme=localStorage.getItem(THEME_KEY)||"system"; return `<div class="grid cols-2">
+<section class="card section"><div class="hero-kicker">Aparência</div><h2>Tema do aplicativo</h2><label>Modo<select onchange="setTheme(this.value)"><option value="system" ${theme==="system"?"selected":""}>Seguir sistema</option><option value="light" ${theme==="light"?"selected":""}>Claro</option><option value="dark" ${theme==="dark"?"selected":""}>Escuro</option></select></label></section>
+<section class="card section"><div class="hero-kicker">Nuvem</div><h2>Sincronização</h2><div class="cloud-status"><span class="status-dot ${dataSource==="cloud"?"on":""}"></span><b>${cloudLabel()}</b></div><p class="muted">O servidor desta temporada já fica configurado dentro do aplicativo. Jogadores não precisam informar URL ou chave.</p></section>
+</div>
+<details class="settings-box"><summary>Dados e diagnóstico</summary><div class="stack">
+<div class="notice">Versão: <span class="code">${APP_VERSION}</span> • Backend: ${cloudConfigured()?"Supabase embutido":"não configurado"}</div>
+<div class="row"><button class="btn small" onclick="exportData()">Exportar JSON</button></div>
+</div></details>`;
+} /* ========= AÇÕES ADM ========= */
+async function addPlayerInvite(){ const name=document.getElementById("inviteName").value.trim(),shape=document.getElementById("inviteShape").value.trim()||"♥"; let code=document.getElementById("inviteCode").value.trim()||generateAccessCode();const msg=document.getElementById("playerFormMsg"); if(!name){msg.textContent="Informe o nome.";return} if(dataSource==="local"){ if(data.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){msg.textContent="Esse nome já está em uso.";return} if(data.players.some(p=>p.code===code))code=generateAccessCode(); data.players.push({id:uid("p"),name,shape,code,active:true,username:"",password:"",firstLogin:true,photo:"",role:"player"});saveLocal();renderAdmin("players");return; } try{ const s=await ensureCloud();const r=await s.from("player_invites").insert({code,display_name:name,shape,active:true,created_by:current.playerId});if(r.error)throw r.error; await loadCloudInvites();renderAdmin("players");toast("Convite criado",`${name}: ${code}`); }catch(e){msg.textContent=e.message||"Falha ao criar convite."}
+}
+async function revokeInvite(id){ if(dataSource!=="cloud")return;const s=await ensureCloud();await s.from("player_invites").update({active:false}).eq("id",id);await loadCloudInvites();renderAdmin("players");
+}
+async function togglePlayer(id){ const p=data.players.find(x=>x.id===id);if(!p)return; p.active=!p.active; if(dataSource==="local"){saveLocal();renderAdmin("players");return} const s=await ensureCloud();const r=await s.from("profiles").update({active:p.active}).eq("id",id);if(r.error){p.active=!p.active;toast("Erro",r.error.message)}renderAdmin("players");
+}
+async function addEvent(){ const title=document.getElementById("eventTitle").value.trim(),startVal=document.getElementById("eventStart").value,deadlineVal=document.getElementById("eventDeadline").value; const desc=document.getElementById("eventDescription").value.trim(),rem=Number(document.getElementById("eventReminder").value),msg=document.getElementById("eventFormMsg"); if(!title||!startVal||!deadlineVal){msg.textContent="Preencha título, início e prazo.";return} const startsAt=new Date(startVal).toISOString(),deadline=new Date(deadlineVal).toISOString(); if(new Date(deadline)<=new Date(startsAt)){msg.textContent="O prazo precisa ser posterior ao início.";return} if(dataSource==="local"){ data.events.push({id:uid("e"),title,description:desc,startsAt,deadline,reminderMinutes:rem,active:true,createdAt:nowISO()});saveLocal();renderAdmin("events");return; } try{ const s=await ensureCloud();const r=await s.from("events").insert({title,description:desc,starts_at:startsAt,deadline,reminder_minutes:rem,active:true,created_by:current.playerId});if(r.error)throw r.error; await refreshCloudData();renderAdmin("events"); }catch(e){msg.textContent=e.message||"Falha ao publicar evento."}
+}
+async function toggleEvent(id){ const e=data.events.find(x=>x.id===id);if(!e)return;e.active=!e.active; if(dataSource==="local"){saveLocal();renderAdmin("events");return} const s=await ensureCloud();const r=await s.from("events").update({active:e.active}).eq("id",id);if(r.error)e.active=!e.active;renderAdmin("events");
+}
+async function deleteEvent(id){ if(!confirm("Excluir este evento?"))return; if(dataSource==="local"){data.events=data.events.filter(e=>e.id!==id);saveLocal();renderAdmin("events");return} const s=await ensureCloud();const r=await s.from("events").delete().eq("id",id);if(r.error){toast("Erro",r.error.message);return}await refreshCloudData();renderAdmin("events");
+}
+function changeLocalAdminPassword(){ const p=document.getElementById("newAdminPassword").value;if(p.length<6){toast("Senha","Use pelo menos 6 caracteres.");return} data.settings.adminPassword=p;saveLocal();toast("Senha alterada","Nova senha local salva neste aparelho.");
+}
+function saveCloudSettingsFromAdmin(){ toast("Configuração embutida","A URL e a chave pública são definidas na compilação da V4.1.");
+}
+function resetLocal(){if(!confirm("Apagar todos os dados locais?"))return;localStorage.removeItem(LOCAL_KEY);data=loadLocal();renderAdmin("dashboard")}
+function exportData(){ const blob=new Blob([JSON.stringify({source:dataSource,version:APP_VERSION,data},null,2)],{type:"application/json"}),a=document.createElement("a"); a.href=URL.createObjectURL(blob);a.download=`ilha-dos-lacos-${dataSource}.json`;a.click();URL.revokeObjectURL(a.href);
+} /* ========= RENDER / RESUME ========= */
+function rerender(){ if(current.role==="player")renderPlayer(current.playerTab); else if(current.role==="admin")renderAdmin(current.adminTab,current.detailPlayerId); else renderLogin();
+}
+async function resume(){ initTheme(); let s=null;try{s=JSON.parse(sessionStorage.getItem(SESSION_KEY)||"null")}catch{} if(cloudConfigured()){ try{ const c=await ensureCloud();const sess=await c.auth.getSession(); if(sess.data.session){ const prof=await c.from("profiles").select("*").eq("id",sess.data.session.user.id).single(); if(!prof.error&&prof.data.active!==false){ const role=prof.data.role; current={role,playerId:prof.data.id,playerTab:"profile",adminTab:"dashboard",detailPlayerId:null}; await cloudLoad(role,prof.data.id);await setupRealtime(role,prof.data.id); if(role==="admin")renderAdmin("dashboard");else{renderPlayer("profile");scheduleReminders(prof.data.id);startReminderLoop()} return; } } }catch(e){console.warn("Cloud resume:",e)} } dataSource=cloudConfigured()?"cloud":"local";data=loadLocal(); renderLogin();
+}
+window.addEventListener("storage",ev=>{ if(dataSource==="local"&&(ev.key===LOCAL_KEY||ev.key===LEGACY_KEY)){data=loadLocal();rerender()}
+});
+resume();
+</script>
+</body>
+</html>
